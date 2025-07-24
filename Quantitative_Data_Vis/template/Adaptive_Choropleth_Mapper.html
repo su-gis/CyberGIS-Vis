@@ -1325,7 +1325,12 @@ function geostats_classification(classification, nClass, geojson, items) {
 			for (var i=0; i<geojson.features.length; i++) {
 				if (!(item in geojson.features[i].properties)) continue;
 				if (geojson.features[i].properties[item] == -9999) continue;
-				values[j++] = geojson.features[i].properties[item];
+				// Round up to 4 decimal digits                                  /////////////////=========================
+				let rawValue = geojson.features[i].properties[item];              /////////////////=========================
+				let roundedValue = Math.ceil(rawValue * 10000) / 10000;           /////////////////=========================
+
+				values[j++] = roundedValue;                                       /////////////////=========================
+				//values[j++] = geojson.features[i].properties[item];
 			}
 		}
 	}
@@ -1336,7 +1341,12 @@ function geostats_classification(classification, nClass, geojson, items) {
 				if (!(item in geojson.features[i].properties)) continue;
 				if (geojson.features[i].properties[item] == -9999) continue;
 				if (geojson.features[i].properties[item] == 0) continue;				// if quantile, zero is skipped also.
-				values[j++] = geojson.features[i].properties[item];
+				// Round up to 4 decimal digits                                   /////////////////=========================
+				let rawValue = geojson.features[i].properties[item];              /////////////////=========================
+				let roundedValue = Math.ceil(rawValue * 10000) / 10000;           /////////////////=========================
+
+				values[j++] = roundedValue;                                       /////////////////=========================
+				//values[j++] = geojson.features[i].properties[item];
 			}
 		}
 	}
