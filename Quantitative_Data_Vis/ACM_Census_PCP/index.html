@@ -36,6 +36,9 @@
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/geocode/Control.BingGeocoder.js" type="text/javascript" ></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/grayscale/TileLayer.Grayscale.js"></script>
 	
+    <link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/lib/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="../template/Adaptive_Choropleth_Mapper/lib/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>	
+		
 	<link rel="stylesheet" href="../template/Adaptive_Choropleth_Mapper/css/Adaptive_Choropleth_Mapper.css" />
 	<style>
 		#tooltip {
@@ -763,61 +766,11 @@ function getGlobalJoinfromMaps() {
 }
 
 
-function bound_error(map){
-    
-	map.on('zoomend', function (e) {
-		
-		var currentZoom = map.getZoom();
-		//console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
-		switch (currentZoom) {
-			case 1:
-				app.diff = 10
-				break;
-			case 2:
-				app.diff = 0.5
-				break;
-			case 3:
-				app.diff = 0.1
-				break;
-			case 4:
-				app.diff = 0.057
-				break;
-			case 5:
-				app.diff = 0.041
-				break;
-			case 6:
-				app.diff = 0.033
-				break;
-			case 7:
-				app.diff = 0.025
-				break;
-			case 8:
-				app.diff = 0.017
-				break;
-			case 9:
-				app.diff = 0.009
-				break;
-			case 10:
-				app.diff = 0.001
-				break;
-			case 11:
-				app.diff = 0.001
-				break;
-			case 12:
-				app.diff = 0.001
-				break;
-			case 13:
-				app.diff = 0.001
-				break;
-			case 14:
-				app.diff = 0.0005
-				break;
-			case 15:
-				app.diff = 0.0005
-				break;				
-		}
-	});
-	return app.diff
+function bound_error(map) {
+  const zoom = map.getZoom();
+  // Define diff as exponentially smaller as zoom increases
+  const diff = Math.pow(2, (1 - zoom)) * 5;  // Empirical scaling
+  return diff;
 }
 
 // bounds compare with toFixed(2)
@@ -1325,7 +1278,12 @@ function geostats_classification(classification, nClass, geojson, items) {
 			for (var i=0; i<geojson.features.length; i++) {
 				if (!(item in geojson.features[i].properties)) continue;
 				if (geojson.features[i].properties[item] == -9999) continue;
-				values[j++] = geojson.features[i].properties[item];
+				// Round up to 4 decimal digits                                  /////////////////=========================
+				let rawValue = geojson.features[i].properties[item];              /////////////////=========================
+				let roundedValue = Math.ceil(rawValue * 10000) / 10000;           /////////////////=========================
+
+				values[j++] = roundedValue;                                       /////////////////=========================
+				//values[j++] = geojson.features[i].properties[item];
 			}
 		}
 	}
@@ -1336,7 +1294,12 @@ function geostats_classification(classification, nClass, geojson, items) {
 				if (!(item in geojson.features[i].properties)) continue;
 				if (geojson.features[i].properties[item] == -9999) continue;
 				if (geojson.features[i].properties[item] == 0) continue;				// if quantile, zero is skipped also.
-				values[j++] = geojson.features[i].properties[item];
+				// Round up to 4 decimal digits                                   /////////////////=========================
+				let rawValue = geojson.features[i].properties[item];              /////////////////=========================
+				let roundedValue = Math.ceil(rawValue * 10000) / 10000;           /////////////////=========================
+
+				values[j++] = roundedValue;                                       /////////////////=========================
+				//values[j++] = geojson.features[i].properties[item];
 			}
 		}
 	}
@@ -1484,23 +1447,16 @@ function ACSdata_render(mIDX) {
 		var item = app[mIDX].item;
 		
         if (first < NumOfMaps) {
-            var options = {
-                collapsed: false, /* Whether its collapsed or not */
-                position: 'bottomleft', /* The position of the control */
-                text: 'Locate', /* The text of the submit button */
-                geocoderId: first,
-                callback: function (results) {
-                    var bbox = results.resourceSets[0].resources[0].bbox,
-                        first = new L.LatLng(bbox[0], bbox[1]),
-                        second = new L.LatLng(bbox[2], bbox[3]),
-                        bounds = new L.LatLngBounds([first, second]);
-                        this._map.fitBounds(bounds);
-                        //this._map.setZoom(7);
-                    }
-            };	
-
-            var bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs', options);
-            map.addControl(bingGeocoder);  
+            // Add geocoder without automatic blue marker
+            var geocoder = L.Control.geocoder({
+              position: 'topleft', //topleft, topright, bottomleft, bottomright
+              defaultMarkGeocode: false  // disables marker
+            }).addTo(map);
+	        
+            // Optionally zoom to the found area
+            geocoder.on('markgeocode', function(e) {
+              map.fitBounds(e.geocode.bbox);
+            });	
         }
         first += 1;
 		
