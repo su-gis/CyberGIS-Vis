@@ -766,61 +766,11 @@ function getGlobalJoinfromMaps() {
 }
 
 
-function bound_error(map){
-    
-	map.on('zoomend', function (e) {
-		
-		var currentZoom = map.getZoom();
-		//console.log("XXXXXXXXXXXXXXXXXX  currentZoom   " + currentZoom);
-		switch (currentZoom) {
-			case 1:
-				app.diff = 10
-				break;
-			case 2:
-				app.diff = 0.5
-				break;
-			case 3:
-				app.diff = 0.1
-				break;
-			case 4:
-				app.diff = 0.057
-				break;
-			case 5:
-				app.diff = 0.041
-				break;
-			case 6:
-				app.diff = 0.033
-				break;
-			case 7:
-				app.diff = 0.025
-				break;
-			case 8:
-				app.diff = 0.017
-				break;
-			case 9:
-				app.diff = 0.009
-				break;
-			case 10:
-				app.diff = 0.001
-				break;
-			case 11:
-				app.diff = 0.001
-				break;
-			case 12:
-				app.diff = 0.001
-				break;
-			case 13:
-				app.diff = 0.001
-				break;
-			case 14:
-				app.diff = 0.0005
-				break;
-			case 15:
-				app.diff = 0.0005
-				break;				
-		}
-	});
-	return app.diff
+function bound_error(map) {
+  const zoom = map.getZoom();
+  // Define diff as exponentially smaller as zoom increases
+  const diff = Math.pow(2, (1 - zoom)) * 5;  // Empirical scaling
+  return diff;
 }
 
 // bounds compare with toFixed(2)
