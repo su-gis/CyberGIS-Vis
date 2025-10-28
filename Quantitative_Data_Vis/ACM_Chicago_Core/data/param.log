@@ -1,0 +1,17 @@
+2025-10-28 07:12:58 ACM_Chicago_Core
+
+  {'title': 'Socioeconomic Data Visualization in Chicago',
+   'filename_suffix': 'Chicago_Core',
+   'variables': ['Median monthly housing costs', '% below poverty',
+                 '% unemployed', '% with 4year college degree', '% manufacturing',
+                 '% service industry', '% structures more than 30 years old',
+                 '% households moved <10 years ago', '% multiunit structures',
+                 '% owner occupied housing', '% vacant housing',
+                 '% > 60 years old', '% < 18 years old', '% white', '% Asian',
+                 '% Hispanic', '% black', '% foreign born'],
+   'NumOfMaps': 18,
+   'Initial_map_center': [41.82, -87.85],
+   'Initial_map_zoom_level': 9,
+   'SortLayers': 'compare',
+   'Map_width': '400px',
+   'Map_height': '480px'}
