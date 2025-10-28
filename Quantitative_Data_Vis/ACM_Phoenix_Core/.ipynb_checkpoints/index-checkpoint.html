@@ -2,11 +2,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Adaptive Choropleth Mapper</title>
+	<title>Socioeconomic Data Visualization in the Phoenix Urban Core</title>
 
-	<script src="data/CONFIG.js"></script>
-	<script src="data/GEO_JSON.js"></script>
-	<script src="data/VARIABLES.js"></script>
+	<script src="data/CONFIG_Phoenix_Core.js"></script>
+	<script src="data/GEO_JSON_Phoenix_Core.js"></script>
+	<script src="data/VARIABLES_Phoenix_Core.js"></script>
 	
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/plotly v1.48.3/plotly.min.js"></script>
 	<script src="../template/Adaptive_Choropleth_Mapper/lib/pyextjs-0.1.2/package/dist/ss.js"></script>
@@ -83,7 +83,7 @@
 <body style="height:1500px;">
 	
 	<header>
-		<h1>Adaptive Choropleth Mapper</h1>	
+		<h1>Socioeconomic Data Visualization in the Phoenix Urban Core</h1>	
 	</header>
 	
 	<br>
@@ -144,7 +144,6 @@ var app={
 	maxZoom: 15,
 	minZoom: 2,	
 	m: 2,                                        // number of maps in a web page shown
-	totalMaps: 50,                               // maximum number of maps displayed    
 	diff: 1,									 // difference error                                        // number of maps in a web page shown
 	nPCPvariables: 7,							 // number of variable that you want to visaulize PCP chart.
 	nCLCvariables: 7,							 // number of variable that you want to visaulize Comparision Line chart.
@@ -3027,30 +3026,40 @@ function mapOn_contextmenu_set(mIDX) {
 	var pIDX = (mIDX) ? mIDX : "    "
 	//console.log(getNow(), pIDX, 'START mapOn_contextmenu_set');
 
-    // Generate contextmenu event bindings for up to 50 maps
-    for (let i = 0; i < app.totalMaps; i++) {
-        // Only attach if the map exists and meets the conditions
-        if (app.m >= (i + 1) && (pIDX === "" || pIDX === `map${i}`)) {
-            const mapName = `map${i}`;
-            const handler = window[`mapON_contextmenu_${mapName}`]; // e.g., mapON_contextmenu_map0
-            const mapID = `map${60 + i}`; // e.g., "map60" to "map109"
-    
-            // Safety check to avoid errors if app[mapName] or handler doesn't exist
-            if (app[mapName] && app[mapName].map && typeof handler === "function") {
-                app[mapName].map.on("contextmenu", handler, mapID);
-            }
-        }
-    }
+	if (app.m >= 1  && (pIDX == "    " || pIDX == "map0" )) app["map0" ].map.on('contextmenu', mapON_contextmenu_map0, "map60");
+	if (app.m >= 2  && (pIDX == "    " || pIDX == "map1" )) app["map1" ].map.on('contextmenu', mapON_contextmenu_map1, "map61");
+	if (app.m >= 3  && (pIDX == "    " || pIDX == "map2" )) app["map2" ].map.on('contextmenu', mapON_contextmenu_map2, "map62");
+	if (app.m >= 4  && (pIDX == "    " || pIDX == "map3" )) app["map3" ].map.on('contextmenu', mapON_contextmenu_map3, "map63");
+	if (app.m >= 5  && (pIDX == "    " || pIDX == "map4" )) app["map4" ].map.on('contextmenu', mapON_contextmenu_map4, "map64");
+	if (app.m >= 6  && (pIDX == "    " || pIDX == "map5" )) app["map5" ].map.on('contextmenu', mapON_contextmenu_map5, "map65");
+	if (app.m >= 7  && (pIDX == "    " || pIDX == "map6" )) app["map6" ].map.on('contextmenu', mapON_contextmenu_map6, "map66");
+	if (app.m >= 8  && (pIDX == "    " || pIDX == "map7" )) app["map7" ].map.on('contextmenu', mapON_contextmenu_map7, "map67");
+	if (app.m >= 9  && (pIDX == "    " || pIDX == "map8" )) app["map8" ].map.on('contextmenu', mapON_contextmenu_map8, "map68");
+	if (app.m >= 10 && (pIDX == "    " || pIDX == "map9" )) app["map9" ].map.on('contextmenu', mapON_contextmenu_map9, "map69");
+	if (app.m >= 11 && (pIDX == "    " || pIDX == "map10")) app["map10"].map.on('contextmenu', mapON_contextmenu_map10,"map70");
+	if (app.m >= 12 && (pIDX == "    " || pIDX == "map11")) app["map11"].map.on('contextmenu', mapON_contextmenu_map11,"map71");
+	if (app.m >= 13 && (pIDX == "    " || pIDX == "map12")) app["map12"].map.on('contextmenu', mapON_contextmenu_map12,"map72");
+	if (app.m >= 14 && (pIDX == "    " || pIDX == "map13")) app["map13"].map.on('contextmenu', mapON_contextmenu_map13,"map73");
+	if (app.m >= 15 && (pIDX == "    " || pIDX == "map14")) app["map14"].map.on('contextmenu', mapON_contextmenu_map14,"map74");
 
 	//console.log(getNow(), pIDX, 'ENDED mapOn_contextmenu_set');
 }
 
-// Generate 50 mapON_contextmenu_map functions dynamically
-for (let i = 0; i < app.totalMaps; i++) {
-    window[`mapON_contextmenu_map${i}`] = function(e) {
-        mapON_contextmenu(e, `map${i}`);
-    };
-}
+function mapON_contextmenu_map0(e)  { mapON_contextmenu(e, "map0" ); }
+function mapON_contextmenu_map1(e)  { mapON_contextmenu(e, "map1" ); }
+function mapON_contextmenu_map2(e)  { mapON_contextmenu(e, "map2" ); }
+function mapON_contextmenu_map3(e)  { mapON_contextmenu(e, "map3" ); }
+function mapON_contextmenu_map4(e)  { mapON_contextmenu(e, "map4" ); }
+function mapON_contextmenu_map5(e)  { mapON_contextmenu(e, "map5" ); }
+function mapON_contextmenu_map6(e)  { mapON_contextmenu(e, "map6" ); }
+function mapON_contextmenu_map7(e)  { mapON_contextmenu(e, "map7" ); }
+function mapON_contextmenu_map8(e)  { mapON_contextmenu(e, "map8" ); }
+function mapON_contextmenu_map9(e)  { mapON_contextmenu(e, "map9" ); }
+function mapON_contextmenu_map10(e) { mapON_contextmenu(e, "map10"); }
+function mapON_contextmenu_map11(e) { mapON_contextmenu(e, "map11"); }
+function mapON_contextmenu_map12(e) { mapON_contextmenu(e, "map12"); }
+function mapON_contextmenu_map13(e) { mapON_contextmenu(e, "map13"); }
+function mapON_contextmenu_map14(e) { mapON_contextmenu(e, "map14"); }
 
 function mapON_contextmenu(e, mIDX) {
 	//console.log(getNow(), mIDX, mIDX+"_contextmenu clicked");
@@ -3075,23 +3084,23 @@ function mapON_contextmenu(e, mIDX) {
 	ACSdata_render(mIDX);
 }
 
-// Create an array to hold all the generated functions
-var mapON_movestarts = [];
-
-// Generate 50 mapON_movestart_map functions dynamically
-for (let i = 0; i < app.totalMaps; i++) {
-    // Create the function
-    const func = function(e) {
-        mapON_movestart(e, `map${i}`);
-    };
-
-    // Store it in the array
-    mapON_movestarts.push(func);
-
-    // Also assign to the window object for global access
-    window[`mapON_movestart_map${i}`] = func;
-}
-
+var mapON_movestarts = [
+	function mapON_movestart_map0 (e) { mapON_movestart(e, "map0" ); },
+	function mapON_movestart_map1 (e) { mapON_movestart(e, "map1" ); },
+	function mapON_movestart_map2 (e) { mapON_movestart(e, "map2" ); },
+	function mapON_movestart_map3 (e) { mapON_movestart(e, "map3" ); },
+	function mapON_movestart_map4 (e) { mapON_movestart(e, "map4" ); },
+	function mapON_movestart_map5 (e) { mapON_movestart(e, "map5" ); },
+	function mapON_movestart_map6 (e) { mapON_movestart(e, "map6" ); },
+	function mapON_movestart_map7 (e) { mapON_movestart(e, "map7" ); },
+	function mapON_movestart_map8 (e) { mapON_movestart(e, "map8" ); },
+	function mapON_movestart_map9 (e) { mapON_movestart(e, "map9" ); },
+	function mapON_movestart_map10(e) { mapON_movestart(e, "map10"); },
+	function mapON_movestart_map11(e) { mapON_movestart(e, "map11"); },
+	function mapON_movestart_map12(e) { mapON_movestart(e, "map12"); },
+	function mapON_movestart_map13(e) { mapON_movestart(e, "map13"); },
+	function mapON_movestart_map14(e) { mapON_movestart(e, "map14"); },
+];
 
 function mapOn_movestart_set(mIDX) {
 	var pIDX = (mIDX) ? mIDX : "    "
@@ -3118,23 +3127,23 @@ function mapON_movestart(e, mIDX) {
 	mapOn_movestart_off();
 }
 
-// Initialize an array to hold all moveend handler functions
-var mapON_moveends = [];
-
-// Generate 50 mapON_moveend_map functions dynamically
-for (let i = 0; i < app.totalMaps; i++) {
-    // Define the function
-    const func = function(e) {
-        mapON_moveend(e, `map${i}`);
-    };
-
-    // Store in the array
-    mapON_moveends.push(func);
-
-    // Assign to the window object for global access
-    window[`mapON_moveend_map${i}`] = func;
-}
-
+var mapON_moveends = [
+	function mapON_moveend_map0 (e) { mapON_moveend(e, "map0" ); },
+	function mapON_moveend_map1 (e) { mapON_moveend(e, "map1" ); },
+	function mapON_moveend_map2 (e) { mapON_moveend(e, "map2" ); },
+	function mapON_moveend_map3 (e) { mapON_moveend(e, "map3" ); },
+	function mapON_moveend_map4 (e) { mapON_moveend(e, "map4" ); },
+	function mapON_moveend_map5 (e) { mapON_moveend(e, "map5" ); },
+	function mapON_moveend_map6 (e) { mapON_moveend(e, "map6" ); },
+	function mapON_moveend_map7 (e) { mapON_moveend(e, "map7" ); },
+	function mapON_moveend_map8 (e) { mapON_moveend(e, "map8" ); },
+	function mapON_moveend_map9 (e) { mapON_moveend(e, "map9" ); },
+	function mapON_moveend_map10(e) { mapON_moveend(e, "map10"); },
+	function mapON_moveend_map11(e) { mapON_moveend(e, "map11"); },
+	function mapON_moveend_map12(e) { mapON_moveend(e, "map12"); },
+	function mapON_moveend_map13(e) { mapON_moveend(e, "map13"); },
+	function mapON_moveend_map14(e) { mapON_moveend(e, "map14"); },
+];
 
 function mapOn_moveend_set(mIDX) {
 	var pIDX = (mIDX) ? mIDX : "    "

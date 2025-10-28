@@ -1,0 +1,19 @@
+2025-10-28 06:28:09 ACM_Phoenix_Core
+
+  {'title': 'Socioeconomic Data Visualization in the Phoenix Urban Core',
+   'filename_suffix': 'Phoenix_Core',
+   'variables': ['Median household income', '% below poverty', '% Unemployed',
+                 '% College or above', '% manufacturing', '% service industry',
+                 '% structures more than 30 years old',
+                 '% households moved <10 years ago', '% multiunit structures',
+                 '% owner occupied housing', '% vacant housing',
+                 '% > 60 years old', '% < 18 years old', '% white', '% Asian',
+                 '% Hispanic', '% black',
+                 '% American Indian and Alaska Native alone', '% foreign born'],
+   'NumOfMaps': 19,
+   'Initial_map_center': [33.55, -112.07],
+   'Initial_map_zoom_level': 10,
+   'SortLayers': 'compare',
+   'Map_width': '400px',
+   'Map_height': '480px',
+   'Stacked_Chart': False}
